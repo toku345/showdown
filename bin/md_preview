@@ -1,3 +1,6 @@
 #!/usr/bin/env ruby
+PORT = 3000
+RACKUP_FILE_PATH = "#{File.expand_path('../../lib', __FILE__)}/config.ru"
 
-require 'md_preview'
+system("thin -R #{RACKUP_FILE_PATH} -p #{PORT} start")
+# system("ruby #{RACKUP_FILE_PATH}")
