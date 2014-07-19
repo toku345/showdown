@@ -3,21 +3,23 @@ require 'md_preview/version'
 require 'redcarpet'
 
 module MdPreview
-  # MdWatcher
-  module MdWatcher
-    def setup_render
-      @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+  # Convert markdown to html.
+  module Converter
+    def markdown
+      @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML)
     end
 
-    def parsed_html
-      @markdown.render(File.open(@target_path).read)
+    def converted_html
+      markdown.render(File.open(@target_path).read)
     end
+  end
 
+  # Check file change.
+  module WatchDog
     def file_changed?
       @old_file_mtime ||= File.stat(@target_path).mtime
 
       if File.stat(@target_path).mtime > @old_file_mtime
-        puts 'detect file change'
         @old_file_mtime = File.stat(@target_path).mtime
         true
       else
@@ -26,22 +28,22 @@ module MdPreview
     end
   end
 
-  # RackApp
+  # Rack application class
   class RackApp < Rack::WebSocket::Application
-    include MdWatcher
+    include Converter
+    include WatchDog
 
     def initialize
-      setup_render
       @target_path = ENV['TARGET_PATH']
     end
 
     def on_open(_env)
       puts 'client connected'
 
-      send_data parsed_html
+      send_data converted_html
 
       EM.add_periodic_timer(0.5) do
-        send_data parsed_html if file_changed?
+        send_data converted_html if file_changed?
       end
     end
 
