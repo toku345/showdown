@@ -8,7 +8,13 @@ Near-Real time Markdown viewer.
 
 ## Usage
 
+1. Run showdown server.
+
+    ```
     $ showdown /path/to/your/file.md
+    ```
+
+2. Open your favorite brower and access `http://localhost:3000/`.
 
 ## Contributing
 
