@@ -6,7 +6,7 @@
     <script type="text/javascript">
       var ws;
       function init() {
-        ws = new WebSocket("ws://localhost:3000/websocket");
+        ws = new WebSocket("ws://" + location.hostname + ":" + location.port + "/websocket");
 
         ws.onopen = function() {
           // output("onopend");
