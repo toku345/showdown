@@ -1,22 +1,48 @@
 require 'rack/websocket'
 require 'md_preview/version'
+require 'redcarpet'
 
 module MdPreview
+  # MdWatcher
+  module MdWatcher
+    def setup_render
+      @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+    end
+
+    def parsed_html
+      @markdown.render(File.open(@target_path).read)
+    end
+
+    def file_changed?
+      @old_file_mtime ||= File.stat(@target_path).mtime
+
+      if File.stat(@target_path).mtime > @old_file_mtime
+        puts 'detect file change'
+        @old_file_mtime = File.stat(@target_path).mtime
+        true
+      else
+        false
+      end
+    end
+  end
+
+  # RackApp
   class RackApp < Rack::WebSocket::Application
+    include MdWatcher
+
+    def initialize
+      setup_render
+      @target_path = ENV['TARGET_PATH']
+    end
+
     def on_open(_env)
       puts 'client connected'
-      EM.add_timer(5) do
-        send_data 'This message should show-up 5 secs later'
-      end
 
-      EM.add_timer(15) do
-        send_data 'This message should show-up 15 secs later'
-      end
+      send_data parsed_html
 
-      # EM.add_periodic_timer(1) do
-      #   send_data target
-      #   # send_data 'yay!'
-      # end
+      EM.add_periodic_timer(0.5) do
+        send_data parsed_html if file_changed?
+      end
     end
 
     def on_message(_env, msg)
@@ -26,12 +52,6 @@ module MdPreview
 
     def on_close(_env)
       puts 'client disconnected'
-    end
-
-    private
-
-    def target
-      @target ||= File.open('./target.txt', 'r').readlines[0]
     end
   end
 end
