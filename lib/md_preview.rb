@@ -20,7 +20,6 @@ module MdPreview
       @old_file_mtime ||= File.stat(@target_path).mtime
 
       if File.stat(@target_path).mtime > @old_file_mtime
-        puts 'detect file change'
         @old_file_mtime = File.stat(@target_path).mtime
         true
       else

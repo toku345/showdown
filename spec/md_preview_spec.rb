@@ -12,9 +12,9 @@ end
 describe MdPreview::Converter do
   include MdPreview::Converter
 
-  describe '#converted_html' do
-    before(:all) { @target_path = File.expand_path('../support/test.md', __FILE__) }
+  before(:all) { @target_path = File.expand_path('../support/test.md', __FILE__) }
 
+  describe '#converted_html' do
     let(:expected_html) { "<p>This is <em>bongos</em>, indeed.</p>\n" }
 
     context '@markdown is nil' do
@@ -36,4 +36,29 @@ describe MdPreview::Converter do
 end
 
 describe MdPreview::WatchDog do
+  include MdPreview::WatchDog
+
+  before(:all) { @target_path = File.expand_path('../support/test.md', __FILE__) }
+
+  describe '#file_changed?' do
+    context 'file is chenged' do
+      before(:each) do
+        test_time = Time.now
+        FileUtils.touch(@target_path, mtime: test_time)
+        @old_file_mtime = test_time - 60 # a minute ago
+      end
+
+      it { expect(file_changed?).to eq true }
+    end
+
+    context "file isn't chenge" do
+      before(:each) do
+        test_time = Time.now
+        FileUtils.touch(@target_path, mtime: test_time)
+        @old_file_mtime = test_time
+      end
+
+      it { expect(file_changed?).to eq false }
+    end
+  end
 end
