@@ -1,15 +1,15 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'md_preview/version'
+require 'showdown/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "md_preview"
-  spec.version       = MdPreview::VERSION
+  spec.name          = "showdown"
+  spec.version       = Showdown::VERSION
   spec.authors       = ["Fumitaka Tokumitsu"]
   spec.email         = ["toku345@gmail.com"]
-  spec.summary       = 'Near-Real time markdown preview'
-  spec.description   = 'Near-Real time markdown preview'
+  spec.summary       = 'Near-Real time markdown viewer'
+  spec.description   = 'Near-Real time markdown viewer'
   spec.homepage      = ""
   spec.license       = "MIT"
 

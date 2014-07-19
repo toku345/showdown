@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe MdPreview do
+describe Showdown do
   it 'has a version number' do
-    expect(MdPreview::VERSION).not_to be nil
+    expect(Showdown::VERSION).not_to be nil
   end
 end
 
-describe MdPreview::RackApp do
+describe Showdown::RackApp do
 end
 
-describe MdPreview::Converter do
-  include MdPreview::Converter
+describe Showdown::Converter do
+  include Showdown::Converter
 
   before(:all) { @target_path = File.expand_path('../support/test.md', __FILE__) }
 
@@ -35,8 +35,8 @@ describe MdPreview::Converter do
   end
 end
 
-describe MdPreview::WatchDog do
-  include MdPreview::WatchDog
+describe Showdown::WatchDog do
+  include Showdown::WatchDog
 
   before(:all) { @target_path = File.expand_path('../support/test.md', __FILE__) }
 
