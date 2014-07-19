@@ -1,24 +1,16 @@
-# MdPreview
+# md_preview
 
-TODO: Write a gem description
+Near-Real time Markdown viewer.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'md_preview'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Install it yourself as:
 
     $ gem install md_preview
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ md_preview /path/to/your/file.md
 
 ## Contributing
 
