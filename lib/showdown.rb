@@ -1,8 +1,8 @@
 require 'rack/websocket'
-require 'md_preview/version'
+require 'showdown/version'
 require 'redcarpet'
 
-module MdPreview
+module Showdown
   # Convert markdown to html.
   module Converter
     def markdown

@@ -1,7 +1,7 @@
 lib = File.expand_path('..', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'md_preview'
+require 'showdown'
 
 puts "tartget: #{ENV['TARGET_PATH']}"
 
@@ -10,5 +10,5 @@ map '/' do
 end
 
 map '/websocket' do
-  run MdPreview::RackApp.new # backend: { debug: true }
+  run Showdown::RackApp.new # backend: { debug: true }
 end

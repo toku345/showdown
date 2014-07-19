@@ -8,7 +8,7 @@ Signal.trap(:INT) do
 end
 
 def help
-  $stdout.puts 'usage: md_preview <path>'
+  $stdout.puts 'usage: showdown <path>'
 end
 
 unless ARGV[0]
