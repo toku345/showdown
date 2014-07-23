@@ -1,6 +1,4 @@
-# showdown
-
-[![Gem Version](https://badge.fury.io/rb/showdown.svg)](http://badge.fury.io/rb/showdown)
+# showdown [![Gem Version](https://badge.fury.io/rb/showdown.svg)](http://badge.fury.io/rb/showdown)
 
 Near-Real time Markdown viewer.
 
