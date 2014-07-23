@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
-PORT = 3000
+require 'optparse'
+
+@port = 3000
 RACKUP_FILE_PATH = "#{File.expand_path('../../lib', __FILE__)}/config.ru"
 
 Signal.trap(:INT) do
@@ -7,8 +9,15 @@ Signal.trap(:INT) do
   exit(0)
 end
 
+def parse_options
+  OptionParser.new do |o|
+    o.on('-p', '--port=PORT') { |v| @port = v }
+    o.parse!(ARGV)
+  end
+end
+
 def help
-  $stdout.puts 'usage: showdown <path>'
+  $stdout.puts 'usage: showdown [-p 4567] /path/to/your/markdown/file'
 end
 
 unless ARGV[0]
@@ -16,6 +25,7 @@ unless ARGV[0]
   exit 1
 end
 
-TARGET_PATH = File.expand_path(ARGV[0])
+parse_options
+TARGET_PATH = File.expand_path(ARGV.shift)
 
-system "TARGET_PATH=#{TARGET_PATH} thin -R #{RACKUP_FILE_PATH} -p #{PORT} start"
+system "TARGET_PATH=#{TARGET_PATH} thin -R #{RACKUP_FILE_PATH} -p #{@port} start"
