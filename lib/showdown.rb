@@ -6,7 +6,7 @@ module Showdown
   # Convert markdown to html.
   module Converter
     def markdown
-      @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+      @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, strikethrough: true)
     end
 
     def converted_html
