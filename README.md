@@ -2,6 +2,8 @@
 
 Near-Real time Markdown viewer.
 
+![ScreenCast](https://qiita-image-store.s3.amazonaws.com/0/13998/b7d50137-7cfb-8488-64a9-c02be042bd83.gif)
+
 ## Installation
 
     $ gem install showdown
